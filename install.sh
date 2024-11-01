@@ -39,12 +39,13 @@ install_docker() {
 
 install_docker_compose() {
     echo "正在安装 Docker Compose..."
-    # 获取最新版本号
-    DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | grep tag_name | cut -d '"' -f 2)
-    # 下载 Docker Compose
-    sudo curl -L "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-    # 赋予执行权限
+    sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+
+    # 设置权限
     sudo chmod +x /usr/local/bin/docker-compose
+
+    # 查看 docker-compose 是否安装成功，查看版本
+    docker-compose --version
     echo "Docker Compose 安装完成，版本: $(docker-compose --version)"
     echo "作者推特: @Norman52521314"
 }
@@ -74,6 +75,8 @@ download_config_script() {
     echo "正在下载 config.py..."
     curl -O https://raw.githubusercontent.com/darknroman/GradientNetworkScript/main/config.py
     echo "config.py 下载完成."
+    echo "开始执行启动容器脚本....."
+    python3 ./config.py
 }
 
 # 安装 Docker
